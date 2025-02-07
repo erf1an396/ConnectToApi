@@ -1,0 +1,20 @@
+<form class="row g-3" #form="ngForm" (submit)="addTransaction()">
+    <div class="col-md-4">
+      <label class="form-label">نوع تراکنش</label>
+      <select [(ngModel)]="newTransaction.Type"  ngModel #type="ngModel"   class="form-select" name="type">
+        <option value="واریز">واریز</option>
+        <option value="برداشت">برداشت</option>
+      </select>
+    </div>
+    <div class="col-md-4">
+      <label class="form-label">مبلغ</label>
+      <input type="number" [(ngModel)]="newTransaction.Amount"  class="form-control" name="amount" required ngModel #amount="ngModel" [class.invalid]="amount.invalid && amount.touched"  />
+    </div>
+    <div class="col-md-4">
+      <label class="form-label">توضیحات</label>
+      <input type="text"class="form-control" [(ngModel)]="newTransaction.Description" name="description" ngModel #description="ngModel"  required />
+    </div>
+    <div class="col-md-12 text-end">
+      <button [disabled]="form.invalid" type="submit" class="btn btn-success mt-3">افزودن تراکنش</button>
+    </div>
+  </form>
