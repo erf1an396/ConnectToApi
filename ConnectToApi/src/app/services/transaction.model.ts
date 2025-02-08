@@ -1,5 +1,5 @@
 export interface Transaction {
-    UserId:string;
+    Id : number
     Type:'واریز'|'برداشت';
     Amount:number;
     Description:string;

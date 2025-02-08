@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Transaction } from './transaction.model';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 
 @Injectable({
@@ -19,33 +19,43 @@ export class TransactionService {
 
   private transactions: Transaction[] = [];
 
+  
+  
+
   getTransactions(): Observable<Transaction[]> {
-      const token = localStorage.getItem('jwtToken'); 
+      const token = localStorage.getItem('JwtToken'); 
   
       const headers = new HttpHeaders({
         'Authorization': `Bearer ${token}` 
       });
   
-      return this.http.get<Transaction[]>(this.ApiUrl, { headers }); 
+      return this.http.get<Transaction[]>(this.ApiUrl, {headers}); 
   
   }
 
-  addTransaction(transaction: Transaction): Observable<Transaction> {
+  addTransaction(transaction: any): Observable<Transaction> {
+    
     const token = localStorage.getItem('JwtToken')
     const headers = new HttpHeaders({
       'Authorization' :`Bearer ${token}`
     });
 
-    return this.http.post<Transaction>(this.ApiUrl, transaction ,{headers});
+    console.log(token)
+    
+    console.log(transaction,  {headers})
+
+    return this.http.post<any>(this.ApiUrl, transaction ,{headers});
+
+    
   }
 
-  deleteTransaction(id: number): Observable<void> {
+  deleteTransaction(id: number): Observable<any> {
 
     const token = localStorage.getItem('JwtToken')
     const headers = new HttpHeaders({
       'Authorization' : `Bearer ${token}`
     })
 
-    return this.http.delete<void>(`${this.ApiUrl}/${id}`, {headers});
+    return this.http.delete<any>(`${this.ApiUrl}/${id}`, {headers});
   }
 }
