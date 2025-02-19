@@ -1,0 +1,57 @@
+<div class="container">
+    <h2>مدیریت کاربران</h2>
+  
+    <!-- جدول کاربران -->
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>نام کاربری</th>
+          <th>ایمیل</th>
+          <th>نقش‌ها</th>
+          <th>عملیات</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of users">
+          <td>{{ user.username }}</td>
+          <td>{{ user.email }}</td>
+          
+          
+          <td>
+            <span *ngFor="let role of user.roles" class="badge bg-info me-1">{{ role }}</span>
+          </td>
+          <td>
+            <button class="btn btn-danger btn-sm" (click)="deleteUser(user.id)">حذف</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    
+    
+    <h3>افزودن نقش به کاربر</h3>
+    <div class="form-group">
+      <label for="userId">انتخاب کاربر:</label>
+      <select id="userId" [(ngModel)]="selectedUserId" class="form-control">
+        <option *ngFor="let user of users" [value]="user.id">{{ user.username }}</option>
+      </select>
+    </div>
+    
+
+    <div class="form-group">
+      <label for="role">انتخاب نقش:</label>
+      <select id="role" [(ngModel)]="selectedRole" class="form-control">
+        <option *ngFor="let role of roles" [value]="role.roleName">{{ role.roleName }}</option>
+      </select>
+    </div>
+
+    
+    <button class="btn btn-primary" (click)="assignRole(selectedUserId, selectedRole)">افزودن نقش</button>
+    <button class="btn btn-warning" (click)="removeRole(selectedUserId, selectedRole)">حذف نقش</button>
+    
+    
+    <h3>ایجاد نقش جدید</h3>
+    <div class="input-group">
+      <input type="text" id="newRole" [(ngModel)]="roleName" class="form-control" placeholder="نام نقش را وارد کنید...">
+      <button class="btn btn-success" (click)="addRole(roleName)">افزودن</button>
+    </div>
+  </div>

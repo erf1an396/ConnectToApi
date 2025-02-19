@@ -5,6 +5,8 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { RoleService } from '../../services/role.service';
+import { jwtDecode } from 'jwt-decode';
 
 
 
@@ -21,7 +23,7 @@ export class LoginComponent {
   username:string = '';
   password:string = '';
 
-  constructor(private authService:AuthService , public router:Router , private http: HttpClient  )
+  constructor(private authService:AuthService , public router:Router , private http: HttpClient , private roleService:RoleService  )
   {
 
   }
@@ -38,23 +40,56 @@ export class LoginComponent {
     this.http.post(`${this.ApiUrl}/login`,data).subscribe({
       next:(res:any) => {
         
+
         localStorage.setItem('JwtToken', res.token) ;
+        
         this.router.navigate(['/transaction']) ; 
-        console.log(res.token)
+        console.log(res.token);
+        
+
       },
       error: err => alert(`خطا: ${err.error.message || 'مشکلی پیش آمد'}`)
     })
 
-   
-    // this.authService.login({username:this.username, password:this.password}).subscribe({
-    //   next:(res) =>{
-    //     this.authService.saveToken(res.token);
-    //     this.router.navigate(['/transaction'])
-    //   },
-    //   error: err => alert(`خطا: ${err.error.message || 'مشکلی پیش آمد'}`)
-    // });
+
+    this.authService.login({username:this.username, password:this.password}).subscribe({
+      next:(res) =>{
+        this.authService.saveToken(res.token);
+
+        const UserId = this.getUserIdFromToken();
+        this.roleService.saveUserRoles(UserId!);
+        
+        this.roleService.isGetRole.subscribe(x=>{
+
+          this.router.navigate(['/transaction']);
+          
+        })
+       
+        
+      },
+      error: err => alert(`خطا: ${err.error.message || 'مشکلی پیش آمد'}`)
+    });
+
+    
   
 }
+
+  getUserIdFromToken():string |null {
+    const token = localStorage.getItem('JwtToken')
+
+  
+      if(token)
+      {
+
+        const decodedToken: any = jwtDecode(token);
+        const UserId = decodedToken['nameid'];
+        return UserId ;
+
+      }
+      
+      return null;
+    }
+
 }
 
 

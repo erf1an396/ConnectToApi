@@ -34,7 +34,7 @@
             <td>{{ transaction.description }}</td>
             <td>{{ transaction.date | date: 'yyyy/MM/dd' }}</td>
             <td>
-              <button class="btn btn-danger btn-sm" (click)="onTransactionDeleted(transaction.id)">
+              <button  class="btn btn-danger btn-sm" (click)="onTransactionDeleted(transaction.id)">
                 حذف
               </button>
             </td>
@@ -43,3 +43,12 @@
       </table>
     </div>
   </div>
+  <br>
+  <br>
+
+  <div class="text-center">
+    <button class="btn btn-primary btn-lg" routerLink="/dashboard">Dashboard</button>
+    <button *ngIf="roles?.includes('admin')" class="btn btn-danger btn-lg" routerLink="/user">UserManagement</button>
+  </div>
+
+  <router-outlet></router-outlet>

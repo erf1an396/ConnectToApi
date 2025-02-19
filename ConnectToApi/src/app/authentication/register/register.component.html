@@ -1,10 +1,16 @@
-<div class="auth-container">
+<div class="auth-container" >
   <h2>ثبت‌نام</h2>
-  <form (submit)="register()">
-    <input type="text" [(ngModel)]="username" name="username" placeholder= "نام کاربری" required />
-    <input type="email" [(ngModel)]="email" name="email" placeholder="ایمیل" required />
-    <input type="password" [(ngModel)]="password" name="password" placeholder="رمز عبور" required />
-    <button type="submit">ثبت‌نام</button>
+  <form [formGroup]="registerForm" (submit)="register()">
+    <input type="text" formControlName="username"  name="username" placeholder= "نام کاربری" required />
+
+    <input type="email" formControlName="email"  name="email" placeholder="ایمیل" required />
+
+    <input type="password" formControlName="password"  name="password" placeholder="رمز عبور" required />
+    <span *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.touched" style="color: red;">
+      رمز عبور باید حداقل ۸ کاراکتر و شامل یک حرف بزرگ، یک حرف کوچک، یک عدد و یک کاراکتر خاص باشد.
+    </span>
+
+    <button [disabled]="registerForm.invalid" type="submit">ثبت‌نام</button>
   </form>
   <p>حساب کاربری دارید؟ <a (click)="router.navigate(['auth/login'])">وارد شوید</a></p>
 </div>

@@ -22,14 +22,15 @@ export class TransactionService {
   
   
 
-  getTransactions(): Observable<Transaction[]> {
+  getTransactions(userid :string): Observable<Transaction[]> {
+
       const token = localStorage.getItem('JwtToken'); 
   
       const headers = new HttpHeaders({
         'Authorization': `Bearer ${token}` 
       });
   
-      return this.http.get<Transaction[]>(this.ApiUrl, {headers}); 
+      return this.http.get<Transaction[]>(`https://localhost:7078/api/Expense?userId=${userid}`, {headers}); 
   
   }
 
@@ -58,4 +59,8 @@ export class TransactionService {
 
     return this.http.delete<any>(`${this.ApiUrl}/${id}`, {headers});
   }
+
+
+  
+
 }

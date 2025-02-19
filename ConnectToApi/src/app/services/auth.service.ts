@@ -2,7 +2,11 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Route , ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
+import { error } from 'node:console';
+import { json } from 'node:stream/consumers';
 import { Observable } from 'rxjs';
+import { jwtDecode } from "jwt-decode";
+
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +19,9 @@ export class AuthService {
 
   register(data:{username:string, email:string , password:string}):Observable<any>{
 
+    console.log(data)
     return this.http.post(`${this.ApiUrl}/register`,data);
+    
 
   }
 
@@ -27,12 +33,24 @@ export class AuthService {
 
 
   saveToken(token: string) {
-    localStorage.setItem('jwtToken', token);
+    localStorage.setItem('JwtToken', token);
+
+
   }
 
-  getToken() {
-    return localStorage.getItem('jwtToken');
+ 
+
+  getUserRoles():string[] {
+    const roles = localStorage.getItem('roles');
+    return roles ? JSON.parse(roles): [];
   }
+
+  
+
+  getToken() {
+    return localStorage.getItem('JwtToken');
+  }
+
 
   isLoggedIn(): boolean {
     return !!this.getToken();
