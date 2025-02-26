@@ -1,15 +1,26 @@
+<!-- <div style="width: 400px; height:300px">
+  <canvas baseChart
+          [data]="barChartData"
+          [options]="barChartOptions"
+          [type]="barChartType">
+  </canvas>
+</div>
+ -->
+
+ <div>
+  <apx-chart 
+    [series]=series
+    [chart]=chart 
+    [xaxis]=xaxis
+    [yaxis]=yaxis
+    [title]=title>
+  </apx-chart>
+</div>
 
 
 
 
+<router-outlet>
 
-<button ></button>
+</router-outlet>
 
-
-
-
-
-
-
-
-<router-outlet></router-outlet>

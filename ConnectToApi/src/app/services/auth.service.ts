@@ -13,7 +13,7 @@ import { jwtDecode } from "jwt-decode";
 })
 export class AuthService {
 
-    private ApiUrl = 'https://localhost:7078/api/Auth';
+    private ApiUrl = 'http://localhost:5091/api/Auth';
   constructor(private http:HttpClient,private activatedRoute: ActivatedRoute, private router:Router) { }
 
 

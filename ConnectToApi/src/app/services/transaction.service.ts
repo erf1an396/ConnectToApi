@@ -30,7 +30,7 @@ export class TransactionService {
         'Authorization': `Bearer ${token}` 
       });
   
-      return this.http.get<Transaction[]>(`https://localhost:7078/api/Expense?userId=${userid}`, {headers}); 
+      return this.http.get<Transaction[]>(`https://localhost:7078/api/Expense/${userid}`, {headers}); 
   
   }
 
