@@ -21,15 +21,15 @@ import {
   ApexYAxis,
   
 } from "ng-apexcharts";
+import { FinanceComponent } from "./finance/finance.component";
+import { PieComponent } from "./pie/pie.component";
 
 
-
-// Chart.register(BarController, BarElement, CategoryScale, LinearScale, Tooltip, Legend);
 
 
 @Component({
   selector: 'app-dashboard',
-  imports: [CommonModule, RouterOutlet , NgApexchartsModule],
+  imports: [CommonModule, RouterOutlet, NgApexchartsModule, FinanceComponent, PieComponent],
   templateUrl: './dashboard.component.html',
   
   styleUrls: ['./dashboard.component.css']
@@ -43,19 +43,7 @@ export class DashboardComponent implements OnInit {
   totalExpense: number = 0;
   balance: number = 0;
 
-  // public barChartType: ChartType = 'bar';
-
-  // public barChartData: ChartData<'bar'> = {
-  //   labels: [],
-  //   datasets: []
-  // };
-  // public barChartOptions: ChartOptions = {
-  //   responsive: true,
-  //   maintainAspectRatio: false ,
-  //   plugins: {
-  //     legend: { position: 'top' }
-  //   }
-  // }
+  
 
   public chartOptions: ApexOptions = {
     chart: {
@@ -93,7 +81,7 @@ export class DashboardComponent implements OnInit {
   ngOnInit(): void {
     
      
-      // this.loadChart();
+      
       this.loadChart();
       
   }
@@ -111,7 +99,7 @@ export class DashboardComponent implements OnInit {
     });
   }
 
-  getUserIdFromToken(): string | null {
+   public getUserIdFromToken(): string | null {
     const token = localStorage.getItem('JwtToken');
     if (token) {
       const decodedToken: any = jwtDecode(token);
@@ -120,39 +108,13 @@ export class DashboardComponent implements OnInit {
     return null;
   }
 
-  // loadChart(){
-  //   const UserId = this.getUserIdFromToken();
-  //   this.expenseService.getMonthlyFinance(UserId!).subscribe((data) => {
-  //     const labels = data.map(d => `${d.year}-${d.month}`);
-  //     const revenueData = data.map(d => d.totalRevenue);
-  //     const expenseData = data.map(d => d.totalExpense);
 
-  //     this.barChartData = {
-  //       labels : labels , 
-  //       datasets : [
-  //         {
-  //           label:'درآمد' , data:revenueData , backgroundColor :'green'
-  //         },
-  //         { label: 'هزینه', data: expenseData, backgroundColor: 'red' }
-  //       ]
-  //     }
-  //   })
-  // }
 
 
   loadChart() {
     const UserId = this.getUserIdFromToken();
     this.expenseService.getMonthlyFinance(UserId!).subscribe((data: MonthlyFinanceDto[]) => {
-      // this.chartOptions = {
-      //   ...this.chartOptions,
-      //   xaxis: {
-      //     categories: data.map(d => `${d.year}-${d.month}`)
-      //   },
-      //   series: [
-      //     { name: 'درآمد', data: data.map(d => d.totalRevenue) },
-      //     { name: 'هزینه', data: data.map(d => d.totalExpense) }
-      //   ]
-      // };
+  
       this.xaxis = {
         categories : data.map(d => `${d.year}-${d.month}`)
       },
