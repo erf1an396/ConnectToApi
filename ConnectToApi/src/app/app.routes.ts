@@ -5,18 +5,22 @@ import { TransactionDetailsComponent } from './transaction-details/transaction-d
 import { AuthenticationComponent } from './authentication/authentication.component';
 import { AuthGuard } from './guard/auth.guard';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
-import { DashboardComponent } from './dashboard/dashboard.component';
+
 import { UserManagmnetComponent } from './user-managmnet/user-managmnet.component';
 
+import { SideDashboardComponent } from './side-dashboard/side-dashboard.component';
+import { roleGuard } from './guard/role.guard';
+
 export const routes: Routes = [
-  { path: '', redirectTo: '/auth/login', pathMatch: 'full' },
+  { path: '', redirectTo: 'dashboard', pathMatch: 'full'},
   {
     path: 'transaction',
     component: TransactionDetailsComponent,
     canActivate :[AuthGuard]
   },
+
   {
-    path :'dashboard' , component:DashboardComponent
+    path :'dashboard' , component:SideDashboardComponent , canActivate:[AuthGuard]
   },
 
   {
@@ -28,8 +32,12 @@ export const routes: Routes = [
     ],
     
   },
-  {path : 'user' , component: UserManagmnetComponent , canActivate:[AuthGuard]},
+  {path : 'user' , component: UserManagmnetComponent , canActivate:[AuthGuard  , roleGuard]},
+  {path:'side' , component:SideDashboardComponent},
+  
 
   { path: '**', component: PageNotFoundComponent },
+
+  
   
 ];

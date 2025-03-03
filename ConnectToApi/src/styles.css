@@ -24,4 +24,14 @@ h2 {
   .table td {
     text-align: center;
   }
+
+  .vazirmatn-font span {
+    font-family: "Vazirmatn", serif !important;
+    font-optical-sizing: auto;
+    font-weight: 300;
+    font-style: normal;
+    
+  }
   
+html, body { height: 100%; }
+body { margin: 0; font-family: Vazirmatn, "Helvetica Neue", sans-serif; }

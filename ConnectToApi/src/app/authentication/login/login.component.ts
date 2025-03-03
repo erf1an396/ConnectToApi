@@ -36,20 +36,20 @@ export class LoginComponent {
     };
   
 
-   console.log(data)
-    this.http.post(`${this.ApiUrl}/login`,data).subscribe({
-      next:(res:any) => {
+  //  console.log(data)
+  //   this.http.post(`${this.ApiUrl}/login`,data).subscribe({
+  //     next:(res:any) => {
         
 
-        localStorage.setItem('JwtToken', res.token) ;
+  //       localStorage.setItem('JwtToken', res.token) ;
         
-        this.router.navigate(['/transaction']) ; 
-        console.log(res.token);
+  //       this.router.navigate(['/dashboard']) ; 
+  //       console.log(res.token);
         
 
-      },
-      error: err => alert(`خطا: ${err.error.message || 'مشکلی پیش آمد'}`)
-    })
+  //     },
+  //     error: err => alert(`خطا: ${err.error.message || 'مشکلی پیش آمد'}`)
+  //   })
 
 
 
@@ -58,17 +58,20 @@ export class LoginComponent {
         this.authService.saveToken(res.token);
 
         const UserId = this.getUserIdFromToken();
+
         this.roleService.saveUserRoles(UserId!);
+        
+        localStorage.setItem('JwtToken', res.token) ;
         
         this.roleService.isGetRole.subscribe(x=>{
 
-          this.router.navigate(['/transaction']);
+          this.router.navigate(['/dashboard']);
           
         })
        
         
       },
-      error: err => alert(`خطا: ${err.error.message || 'مشکلی پیش آمد'}`)
+      error: err => alert(` ${err.error.message || 'نام کاربری یا رمز عبور نادرست است'}`)
     });
 
     
